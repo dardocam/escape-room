@@ -1,0 +1,31 @@
+# mvc-intro
+
+Convención: dwd-v1.0.0.0
+
+Manifiesto:
+
+<ul>
+
+<li>Las rutas http o URL’s siempre van hacia la página index.php
+-Se envía por la URL la variable view para solicitar una página especifica.
+-Ej: http://localhost/my-app/index.php?view=my-view
+-Las vistas son archivos con extensión php que están almacenados en la carpeta src/view 
+-Las vistas son archivos php que tienen mayormente código html
+-Las vistas deben terminar con la palabra View y la extensión php:
+	nombreView.php
+-Los archivos se incluyen con rutas absolutas utilizando la función dirname(__FILE__)
+-Debe definir al menos la constante APP_ROOT en el archivo config.php como insumo para las rutas http que utilice la aplicación como por ejemplo los hipervinculos html.
+-Ej: <a href="http://localhost/mvc-intro/index.php?view=formulario">Ingresar al formulario</a>
+-La constante APP_ROOT debe reemplazar la parte inicial de la URL
+-Ej: <a href=" <?= APP_ROOT . 'index.php?view=formulario' ?>">Ingresar al formulario</a>
+-La carpeta model almacena archivos php con estructuras de datos asociativos mapeadas con las tablas de la DB tipo ORM.
+-La carpeta controller almacena archivos php con funciones que son activadas por los formularios de las vistas.
+-Siempre un formulario en su atributo action envía los datos hacia un controller.
+-El controller es un artefacto de software diseñado principalmente para ser intermediario entre php y la base de datos sql
+-Los controladores son archivos php que están almacenados en la carpeta src/controller
+-Los controladores deben terminar con la palabra Controller y extensión php
+	nombreController.php
+-La aplicación tiene un archivo de configuración de acceso ´.htaccess’
+-...
+
+</ul>
