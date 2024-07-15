@@ -1,4 +1,5 @@
 (function () {
+  const APP_ROOT = "http://localhost/escape-room/";
   var respuestas = new Set();
   var optMapa = {
     "AR-B": { color: "#0072bb", label: "Buenos Aires", isClicked: false },
@@ -51,7 +52,6 @@
             optMapa[clave].isClicked = false;
             respuestas.delete(optMapa[clave].label);
           }
-          enviarRespuesta();
         });
         provincia.addEventListener("dblclick", function (e) {
           console.log("doble click");
@@ -68,11 +68,12 @@
         });
       }
     }
+    getAcertijo();
   }
 
   function enviarRespuesta() {
     postData(
-      "http://localhost/escape-room/index.php?controller=respuestas&activity=game",
+      APP_ROOT + "index.php?controller=preguntas&activity=game&action=index",
       { resp: Array.from(respuestas) }
     ).then((data) => {
       console.log(data); // JSON data parsed by `data.json()` call
@@ -95,6 +96,38 @@
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
     return response.json(); // parses JSON response into native JavaScript objects
+  }
+
+  function getAcertijo() {
+    // url (required), options (optional)
+    fetch(
+      APP_ROOT + "index.php?controller=preguntas&activity=game&action=acertijo",
+      {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        mode: "no-cors", // no-cors, *cors, same-origin
+        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: "same-origin", // include, *same-origin, omit
+        headers: {
+          "Content-Type": "application/json",
+          // "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    )
+      .then(function (response) {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        renderizarPreguntas(data);
+      })
+      .catch(function (err) {
+        // Error :(
+      });
+  }
+
+  function renderizarPreguntas(data) {
+    let elem = document.getElementById("Pregunta");
+    elem.innerHTML = data.Pregunta;
   }
 
   initMapa();
